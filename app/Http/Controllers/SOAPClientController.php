@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use SoapClient;
 
 class SOAPClientController extends Controller
 {
@@ -11,11 +10,19 @@ class SOAPClientController extends Controller
 
     public function __construct()
     {
-        $this->soapClient = new SoapClient(null, [
-            'location' => url('/soap'),
-            'uri' => 'http://localhost:8000/soap',
-            'trace' => true
-        ]);
+        try {
+            $this->soapClient = new \SoapClient(url('/soap/wsdl'), [
+                'location' => url('/soap'),
+                'uri' => config('soap.base_uri', 'http://localhost:8000/soap'),
+                'trace' => true,
+                'exceptions' => true,
+                'cache_wsdl' => WSDL_CACHE_NONE,
+                'features' => SOAP_SINGLE_ELEMENT_ARRAYS
+            ]);
+        } catch (\SoapFault $e) {
+            logger()->error('SOAP Client initialization failed: ' . $e->getMessage());
+            throw $e;
+        }
     }
 
     public function index()
@@ -52,10 +59,17 @@ class SOAPClientController extends Controller
     {
         try {
             $method = $request->input('method');
-            $params = $request->except(['_token', 'method']);
+            if (empty($method)) {
+                throw new \InvalidArgumentException('Method name is required');
+            }
 
-            // Filter out empty parameters
+            $params = $request->except(['_token', 'method']);
             $params = array_filter($params, fn($value) => $value !== null && $value !== '');
+
+            // Validate method exists
+            if (!method_exists($this->soapClient, $method)) {
+                throw new \InvalidArgumentException("Method {$method} does not exist");
+            }
 
             $result = $this->soapClient->__soapCall($method, [$params]);
 
@@ -65,6 +79,13 @@ class SOAPClientController extends Controller
                 'request' => $this->soapClient->__getLastRequest(),
                 'response' => $this->soapClient->__getLastResponse()
             ]);
+        } catch (\SoapFault $e) {
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage(),
+                'request' => $this->soapClient->__getLastRequest(),
+                'response' => $this->soapClient->__getLastResponse()
+            ], 500);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
