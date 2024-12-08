@@ -24,7 +24,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/mnb', [ExchangeRateController::class, 'index']);
 
-
 Route::resource('admin', ServiceController::class)->names('admin')->middleware(['auth']);
 
 Route::get('/restful', [RESTController::class, 'index'])->name('restful');
