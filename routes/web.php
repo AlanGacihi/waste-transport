@@ -17,7 +17,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/calendar/{servid?}', [CalendarController::class, 'index'])->name('calendar.index');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/resdem', [ResDemController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard', [ResDemController::class, 'index'])->name('dashboard');
     Route::post('/resdem', [ResDemController::class, 'store'])->name('resdem.store');
     Route::delete('/resdem/{resdem}', [ResDemController::class, 'destroy'])->name('resdem.destroy');
 });

@@ -61,7 +61,7 @@
                     Register
                 </a>
                 @else
-                <a href="{{ route('dashboard.index') }}" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">
+                <a href="{{ route('dashboard') }}" class="text-white hover:text-gray-200 px-3 py-2 text-sm font-medium">
                     My Resdems
                 </a>
                 <div class="relative group">

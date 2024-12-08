@@ -36,7 +36,7 @@ class ResDemController extends Controller
             'demand' => $request->demand,
         ]);
 
-        return redirect()->route('dashboard.index')->with('success', 'Request created successfully');
+        return redirect()->route('dashboard')->with('success', 'Request created successfully');
     }
 
     public function destroy(ResDem $resdem)
@@ -46,6 +46,6 @@ class ResDemController extends Controller
         }
 
         $resdem->delete();
-        return redirect()->route('dashboard.index')->with('success', 'Request deleted successfully');
+        return redirect()->route('dashboard')->with('success', 'Request deleted successfully');
     }
 }
