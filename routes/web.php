@@ -3,7 +3,7 @@
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ResDemController;
+use App\Http\Controllers\ResdemController;
 use App\Http\Controllers\ExchangeRateController;
 use App\Http\Controllers\RESTController;
 use App\Http\Controllers\ServiceController;
@@ -17,9 +17,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/calendar/{servid?}', [CalendarController::class, 'index'])->name('calendar.index');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [ResDemController::class, 'index'])->name('dashboard');
-    Route::post('/resdem', [ResDemController::class, 'store'])->name('resdem.store');
-    Route::delete('/resdem/{resdem}', [ResDemController::class, 'destroy'])->name('resdem.destroy');
+    Route::get('/dashboard', [ResdemController::class, 'index'])->name('dashboard');
+    Route::post('/resdem', [ResdemController::class, 'store'])->name('resdem.store');
+    Route::delete('/resdem/{resdem}', [ResdemController::class, 'destroy'])->name('resdem.destroy');
 });
 
 Route::get('/mnb', [ExchangeRateController::class, 'index']);

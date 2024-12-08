@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Service;
 use Illuminate\Support\Facades\Auth;
 
-class ResDemController extends Controller
+class ResdemController extends Controller
 {
 
     public function index()

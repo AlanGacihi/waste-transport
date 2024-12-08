@@ -6,7 +6,7 @@ use App\Models\ResDem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ResDemController extends Controller
+class ResdemController extends Controller
 {
     public function index()
     {

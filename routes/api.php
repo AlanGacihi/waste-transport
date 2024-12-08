@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\CalendarController;
-use App\Http\Controllers\API\ResDemController;
+use App\Http\Controllers\API\ResdemController;
 use App\Http\Controllers\API\ServiceController;
 use App\Http\Controllers\API\MenuItemController;
 use App\Http\Controllers\API\PDFController;
@@ -16,7 +16,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/generate-pdf', [PDFController::class, 'generateReport']);
 
 Route::apiResource('calendar', CalendarController::class);
-Route::apiResource('resdems', ResDemController::class);
+Route::apiResource('resdems', ResdemController::class);
 Route::apiResource('services', ServiceController::class);
 
 Route::get('/mnb/daily-rate', [ExchangeRateController::class, 'getDailyRate']);
